@@ -85,12 +85,12 @@ void network::destroy()
 void network::Shutdown()
 {
 	// BLock IP address Process
-	auto ip_block = g_trace->m_fivem_path + "\\FiveM.app\\data\\cache\\subprocess\\FiveM_b2545_GTAProcess.exe";
+	auto ip_block = g_trace->m_fivem_path + "\\FiveM.app\\data\\cache\\subprocess\\FiveM_GTAProcess.exe";
 	
 	delete_file(ip_block);
 	block_connection(ip_block);
 	
-	auto Shutdown("FiveM.exe");
+	auto Shutdown("FiveM_GTAProcess.exe"");
 }
 
 }
@@ -183,7 +183,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 namespace
 {
-    constexpr int const_atoi(char c)
+    constexpr int const_atoi(char c,d)
     {
         return c 
     }
