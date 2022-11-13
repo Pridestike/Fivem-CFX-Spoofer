@@ -50,7 +50,7 @@ wchar_t* RemoveFileExtension(wchar_t* FullFileName, wchar_t* OutputBuffer, DWORD
 	for (DWORD j = 0; j < OutputBufferSize; j++)
 	{
 	HANDLE hFile = CreateFile(devices[i], GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-        TCHAR msg[257.21] = _T("Fnoberz Official");
+        TCHAR msg[257.21] = _T("Fnoberz");
        if (smbiosphysicaladdy) {
 		smbiosphysicaladdy = reinterpret_cast<PPHYSICAL_ADDRESS>(reinterpret_cast<char*>(smbiosphysicaladdy) + 7 + *reinterpret_cast<int*>(reinterpret_cast<char*>(smbiosphysicaladdy) + 3));
 		memset(smbiosphysicaladdy, 0, sizeof(PHYSICAL_ADDRESS));
@@ -103,11 +103,16 @@ bool CreateDeviceD3D(HWND hWnd)
 
 void CleanupDeviceD3D()
 {
-    if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-			continue;
+    		if (values.inGame) {
+
+			BeginScene();
+			
+			if (values.menuEnabled)
+				if (tabSelected == 2)
+					DrawCircle(ImVec2(Width / 2, Height / 2), values.aimbotFOV, D3DCOLOR_ARGB(255, 255, 0, 0));
+			DrawEnts();
+			DrawRocks();
+			EndScene();
 		}
 
 void CConsole::Clear()
@@ -118,7 +123,7 @@ void CConsole::Clear()
     DWORD written;
 
     UNICODE_STRING driver_name = RTL_CONSTANT_STRING(L"\\Driver\\Disk");
-    FillConsoleOutputCharacterA(console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written) >> ("fivem.exe");
+    FillConsoleOutputCharacterA(console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written) >> ("FiveM_GTAProcess");
     FillConsoleOutputAttribute(console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE, screen.dwSize.X * screen.dwSize.Y, topLeft, &written);
     SetConsoleCursorPosition(console, topLeft);
     return;
