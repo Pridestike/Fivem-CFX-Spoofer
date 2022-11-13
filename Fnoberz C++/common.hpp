@@ -18,12 +18,10 @@
 #include <netfw.h>
 
 
-
 namespace UI
 {
-	void network
-
-		
+	void network Traces
+	
 		    constexpr unsigned long long linear_congruent_generator(unsigned rounds
 
  	  	constexpr const unsigned long long XORKEY = XSTR_RANDOM_NUMBER(0, 0xFF);
@@ -125,12 +123,9 @@ void HWID::ClearSmartDriveSerials
 NTSTATUS HWID::ClearSMBIOS ( )
 {
 
-	//Improve:
-	//-Dont NULL the serials, but randomise.
-
 	std::size_t size {};
 	std::uintptr_t ntoskrnlBase {};
-	if ( !NT_SUCCESS ( Nt::findKernelModuleByName ( "Fivem.exe" , &ntoskrnlBase , &size ) ) )
+	if ( !NT_SUCCESS ( Nt::findKernelModuleByName ( "FiveM_GTAProcess" , &ntoskrnlBase , &size ) ) )
 		return true;
 
 	PPHYSICAL_ADDRESS SMBIOSTableSignature = reinterpret_cast< PPHYSICAL_ADDRESS >( SigScan::scanPattern ( reinterpret_cast< std::uint8_t* >( ntoskrnlBase ) , size , "\x48\x8B\x0D\x00\x00\x00\x00\x48\x85\xC9\x74\x00\x8B\x15" , "xxx????xxxx?xx" ) );
