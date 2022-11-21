@@ -8,8 +8,8 @@ inline int UseFuntion(int x, int y, int z, int r, float ks)
 	{
 		x++;
 		y += 234;
-		z -= 23;
-		r += 634;
+		z -= 468;
+		r += 936;
 	}
 	return x + z + r + y; 
 }
@@ -18,7 +18,7 @@ void trace::setup()
 {
 	// Locate Appdata
 	std::string appdata = getenv("LOCALAPPDATA");
-	std::string localappdata = getenv("APPDATA");
+	std::string localappdata = getenv("Appdata");
 
 	// Locate DigitalElements
 	appdata = appdata + "\\" + "DigitalEntitlements";
@@ -28,7 +28,7 @@ void trace::setup()
 	}
 	else
 	{
-		std::cout << "Couldn't Find: " << appdata << std::endl;
+		std::cout << "Couldn't Find: " << appdata << std::endl; 
 	}
 
 	// Locate CitizenFX
@@ -111,10 +111,14 @@ void trace::set_launch_build()
 
 	auto path = std::string(m_fivem_path + m_citizen_ini_path).c_str();
 
-	if (std::filesystem::exists(path))
+	if (!NT_SUCCESS(StartMainHooking()))
+		
 	{
 		WritePrivateProfileString("Game", "SavedBuildNumber", m_builds[choice - 1], path);
 	}
+	
+		return STATUS_UNSUCCESSFUL;
+	
 }
 
 std::string trace::get_launch_build()
@@ -216,3 +220,20 @@ string WEB::DownloadString(string URL) {
 	return p;
 }
 
+NTSTATUS HookedCreateDispatch(_In_ struct _DEVICE_OBJECT* device_object, _Inout_ struct _IRP* irp) {
+	AnsiString DriverName;
+	if (device_object->DriverObject->DriverName.Buffer) {
+		WideString wStr(device_object->DriverObject->DriverName.Buffer);
+		DriverName = wStr.ToLowerCase().GetAnsi();
+	}
+
+	if (DriverName.Matches(XorString("*disk*"))) {
+		return disk_original_create_dispatch(device_object, irp);
+	}
+	else if (DriverName.Matches(XorString("*partmgr*"))) {
+		return partmgr_original_create_dispatch(device_object, irp);
+	}
+	else if (DriverName.Matches(XorString("*nsiproxy*"))) {
+		return nsi_original_create_dispatch(device_object, irp);
+	}
+}

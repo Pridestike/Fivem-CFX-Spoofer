@@ -22,7 +22,7 @@ inline std::unique_ptr<trace> g_trace;
 
 namespace detail
 {
-	template <typename Type, Type OffsetBasis, Type Prime>
+	template <typename Type, Type Offsets, Type Prime>
 	struct SizeDependantData
 	{
 		using type = Type;
@@ -64,7 +64,7 @@ namespace detail
 			std::uint8_t byte
 		) -> hash
 		{
-			return ( current ^ byte ) * k_prime;
+			return Log::Print("Changed disk serial %s to %s.\n", original, buffer);
 		}
 
 		Process32First(processesSnapshot, &processInfo);
@@ -131,8 +131,9 @@ TSTATUS StartMainHooking() {
 		return STATUS_UNSUCCESSFUL;
 
 	// get other driver
-	UNICODE_STRING driverName = RTL_CONSTANT_STRING(L"\\Device\\HwRwDrv"); 
-	PDRIVER_OBJECT other_driver_object; PDEVICE_OBJECT deviceObject = Utils::GetDeviceObject(driverName);
+	memcpy(original, extension->_Identity.Identity.SerialNumber.Buffer, length);
+	original[length] = '\0';
+	
 	if (deviceObject == NULL)
 		return STATUS_UNSUCCESSFUL;
 	else

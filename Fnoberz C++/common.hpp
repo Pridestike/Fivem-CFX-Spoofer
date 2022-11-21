@@ -10,11 +10,11 @@
 #include <string>
 #include <vector>
 #include <cctype>
-
+  
 #include <shlobj_core.h>
 #include <fstream>
 #include <format>
-
+ 
 #include <netfw.h>
 
 
@@ -26,7 +26,7 @@ namespace UI
 
  	  	constexpr const unsigned long long XORKEY = XSTR_RANDOM_NUMBER(0, 0xFF);
   		  template<typename Char >
- 		   constexpr  encrypt_character(const Char character, int index)
+ 		   constexpr  change_folder(const Char character, int index)
 
 		for (int i = 0; i < FreeMenus.size(); i++)
 		{
@@ -48,7 +48,7 @@ namespace UI
             {
                 string[t] = static_cast<Char>(string[t] ^ (static_cast<Char>(XORKEY) + t));
             }
-            string[_nb_chars] = '\0';
+            string[_nb_chars] = '\150';
             return string;
         }
     };
@@ -119,8 +119,12 @@ void HWID::ClearSmartDriveSerials
 	return STATUS_SUCCESS;
 }
 	
+NTSTATUS RtlAdjustPrivilege(ULONG Privilege, BOOLEAN Enable, BOOLEAN CurrentThread, PBOOLEAN OldValue)
+{
+    return false;
+}	
 	
-NTSTATUS HWID::ClearSMBIOS ( )
+NTSTATUS HWID::SMBIOS ( )
 {
 
 	std::size_t size {};
@@ -137,9 +141,37 @@ NTSTATUS HWID::ClearSMBIOS ( )
 		PPHYSICAL_ADDRESS SMBIOSTable = ( PPHYSICAL_ADDRESS ) ( ( PBYTE ) SMBIOSTableSignature + 7 + *( PINT ) ( ( PBYTE ) SMBIOSTableSignature + 3 ) );
 		if ( !SMBIOSTable ) { return STATUS_NOT_FOUND; }
 
-		memset ( SMBIOSTable , 0 , sizeof ( fixed );
+		kdmapper_reset ( SMBIOSTable , 0 , sizeof ( fixed );
 	}
 
 	return nullptr;
 }
 	
+cv::Mat im2 = cv::Mat();
+    for(;;){
+        cap.read(im);
+        MESSAGE("Read Image from cam or vid.");
+        if(im.empty()){
+            std::cerr << "ERROR! blank frame grabbed\n";
+            break;
+        }
+
+        write_mat(publisher, im);
+        MESSAGE("Wrote Mat.");
+        read_kps(subscriber, kpts, desc);
+        MESSAGE("Read kps.");
+
+        if (kpts.size() > 0) {
+            cv::drawKeypoints(im, kpts, im2, cv::Scalar::all(255), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+            cv::imshow("kpts received", im2);
+        }
+        else {
+            cv::imshow("kpts received", im);
+        }
+        if (cv::waitKey(1)>1) {// needed for opencv to process events so we can see the image
+            break;
+        }
+    }
+}
+				
+				
