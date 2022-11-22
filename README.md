@@ -6,7 +6,7 @@
   
     
  
-### 🌟 〢 How To Use (Scroll dow n the text to read more)
+### 🌟 〢 How To Use (Scroll dow n the text to read more)  
 - Download the File here [Release](https://github.com/Fnoberz/FiveM-CFX-Spoofer/releases/tag/fivem) | Scroll down the text for a video tutorial.
 - The video is an older **version of Fivem** or about a few months ago. That's why only Rockstar has changed.
 

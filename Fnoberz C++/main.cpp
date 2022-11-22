@@ -69,8 +69,7 @@ public:
 	bool active = true;
 } globals;
 			
-			
-
+		
 NTSTATUS driver_start( )
 {
 	std::unique_ptr< DRIVER_OBJECT, decltype( &ObfDereferenceObject ) > disk_object( nullptr, &ObfDereferenceObject );
@@ -121,13 +120,10 @@ void CConsole::Clear()
 {
     COORD topLeft = { 0, 0 };
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO screen;
-    DWORD written;
 
     UNICODE_STRING driver_name = RTL_CONSTANT_STRING(L"\\Driver\\Disk");
     FillConsoleOutputCharacterA(console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written) >> ("FiveM_GTAProcess");
-    FillConsoleOutputAttribute(console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE, screen.dwSize.X * screen.dwSize.Y, topLeft, &written);
-    SetConsoleCursorPosition(console, topLeft);
+	
     return;
 }
 
