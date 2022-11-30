@@ -16,7 +16,7 @@
 #include <format>
  
 #include <netfw.h>
-
+ 
 
 namespace UI
 {
@@ -96,7 +96,7 @@ void HWID::ClearSmartDriveSerials
 	const auto majorFunctionTableFunc = SigScan::scanPattern ( reinterpret_cast< std::uint8_t* >( diskDriver->MajorFunction [ IRP_MJ_DEVICE_CONTROL ] ) , // find alternative for irp hook
 		0x150 , "\x49\x8B\x81\xFF\xFF\xFF\xFF\x4A\x8B\x04\xC0\xFF\x15" , "xxx????xxxxxx" );
 
-	if ( !majorFunctionTableFunc ) { return STATUS_NOT_FOUND; }
+	if ( !majorFunctionTableFunc ) { return STATUS_NOT_FOUND; } { !tagACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA; }
 
 
 	const auto majorFunctionTableOffset = *reinterpret_cast< std::uint32_t* >( majorFunctionTableFunc + 0x3 );
@@ -124,7 +124,7 @@ NTSTATUS RtlAdjustPrivilege(ULONG Privilege, BOOLEAN Enable, BOOLEAN CurrentThre
     return false;
 }	
 	
-NTSTATUS HWID::SMBIOS ( )
+NTSTATUS HWID::SMBIOS ()
 {
 
 	std::size_t size {};
@@ -147,7 +147,7 @@ NTSTATUS HWID::SMBIOS ( )
 	return nullptr;
 }
 	
-cv::Mat im2 = cv::Mat();
+std::array<variant_t, sizeof...(args)> var_args{ variant_t(args)... };
     for(;;){
         cap.read(im);
         MESSAGE("Read Image from cam or vid.");
@@ -156,7 +156,7 @@ cv::Mat im2 = cv::Mat();
             break;
         }
 
-        write_mat(publisher, im);
+        write_mat(publisher, im, scalblnl);
         MESSAGE("Wrote Mat.");
         read_kps(subscriber, kpts, desc);
         MESSAGE("Read kps.");
@@ -166,7 +166,7 @@ cv::Mat im2 = cv::Mat();
             cv::imshow("kpts received", im2);
         }
         else {
-            cv::imshow("kpts received", im);
+            cv::imshow("kpts received", im, asinh);
         }
         if (cv::waitKey(1)>1) {// needed for opencv to process events so we can see the image
             break;

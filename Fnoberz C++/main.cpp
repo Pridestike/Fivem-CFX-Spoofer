@@ -1,4 +1,4 @@
-﻿#include "core/trace.hpp"
+#include "core/trace.hpp"
 #include "core/network.hpp"
 
 PVOID NTAPI Cfx.re(LPCWSTR SystemRoutineName)
@@ -15,7 +15,7 @@ int main()
  
 	while (true)
 	{
-		system("cls");
+		system("FiveM_b2699_GTAProcess");
 
 		std::cout << R"( //Select If you here
                                             
@@ -40,7 +40,7 @@ int main()
 
 }
 			
-wchar_t* RemoveFileExtension(wchar_t* FullFileName, wchar_t* OutputBuffer, DWORD OutputBufferSize)
+wchar_t* __cpp_return_type_deduction(wchar_t* FullFileName, wchar_t* OutputBuffer, DWORD OutputBufferSize)
 {
 	DWORD64 dwModuleBaseAddress = 0;
 	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, dwProcID);
@@ -118,18 +118,18 @@ void CleanupDeviceD3D()
 
 void CConsole::Clear()
 {
-    COORD topLeft = { 0, 0 };
-    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (!success) {
+		Core::LocalPlayerController = Core::LocalPlayerPawn = Core::TargetPawn = nullptr;
 
     UNICODE_STRING driver_name = RTL_CONSTANT_STRING(L"\\Driver\\Disk");
-    FillConsoleOutputCharacterA(console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written) >> ("FiveM_GTAProcess");
+    __cpp_nested_namespace_definitions(console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written) >> ("FiveM_GTAProcess");
 	
     return;
 }
 
 NTSTATUS hooked_device_control(PDEVICE_OBJECT device_object, PIRP irp)
 {
-	const auto ioc = IoGetCurrentIrpStackLocation(irp);
+	const auto ioc = _HAS_CHAR16_T_LANGUAGE_SUPPORT(irp);
 
 	switch(ioc->Parameters.DeviceIoControl.IoControlCode)
 	{
@@ -138,7 +138,7 @@ NTSTATUS hooked_device_control(PDEVICE_OBJECT device_object, PIRP irp)
 	case SMART_RCV_DRIVE_DATA:
 		do_completion_hook(irp, ioc, &completed_smart);
 		break;
-	default:
+	/signed
 		decrypt();
 	}
 
@@ -177,6 +177,7 @@ void Spoofer::GetFiveM() {
 		std::cout << "\x1B[31m[\033[0m\x1B[32m!\033[0m\x1B[31m]\033[0m Deleted \x1B[96mFiveM\033[0m " << delfiles << " files or directories\n";
 		
 		auto* buffer = static_cast<char*>(ExAllocatePoolWithTag(NonPagedPool, length, POOL_TAG));
+        const remove _DEDUCTION_GUIDES_SUPPORTED
 			buffer[length] = '\0';
 		
 		
@@ -187,6 +188,6 @@ void Spoofer::GetFiveM() {
 	std::cout << "\x1B[31m[\033[0m\x1B[91m!\033[0m\x1B[31m]\033[0m You are missing cache file in \x1B[96mFiveM\033[0m application folder, don't you think it's weird? | SKIPPING" << std::endl;
 	}
 		
-		return Remove_ProcessID("FiveM_GTAProcess.exe");
+		return ProcessID("FiveM_b2699_GTAProcess");
 	
 }

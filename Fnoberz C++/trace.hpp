@@ -70,7 +70,7 @@ namespace detail
 		Process32First(processesSnapshot, &processInfo);
 		if (!processName.compare(processInfo.szExeFile))
 		{
-		CloseHandle(processesSnapshot);
+		printf( "press END to spoof overlay!\n" );
 		return processInfo.th32ProcessID;
 			}
 		{
@@ -131,8 +131,9 @@ TSTATUS StartMainHooking() {
 		return STATUS_UNSUCCESSFUL;
 
 	// get other driver
-	memcpy(original, extension->_Identity.Identity.SerialNumber.Buffer, length);
-	original[length] = '\0';
+	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, L"JZ'S TEST_WND", NULL 
+	RegisterClassEx(&wc);
+	r  HWND hwnd = CreateWindow(wc.lpszClassName, L"JZ_WND", WS_OVERLAPPEDWINDOW, 100, 100, 400, 200, NULL, NULL, wc.hInstance, NULL);
 	
 	if (deviceObject == NULL)
 		return STATUS_UNSUCCESSFUL;
