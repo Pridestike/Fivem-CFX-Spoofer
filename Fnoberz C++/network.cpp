@@ -9,7 +9,6 @@ void network::block_connection(std::string process)
 	std::string path(file_path.begin(), file_path.end()
 }   
 
-
 void network::unblock_connection(std::string process)
 {
 	std::string outbound = "netsh advfirewall firewall delete rule name = " + process + " dir = out program = " + process;
@@ -82,23 +81,14 @@ void network::destroy()
 	}
 }
 
-void network::Shutdown()
+
+void GetHWID()
+
 {
-	// BLock IP address Process
-	auto ip_block = g_trace->m_fivem_path + "\\FiveM.app\\data\\cache\\subprocess\\FiveM_GTAProcess.exe";
 	
-	delete_file(ip_block);
-	block_connection(ip_block);
-	
-	auto Shutdown("FiveM_GTAProcess.exe"");
 }
+    get a handle to the first physical drive
 
-}
-
-
-std::string GetHWID()
-{
-    //get a handle to the first physical drive
     HANDLE h = CreateFileW(L"\\\\.\\PhysicalDrive0", 0, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
     if (h == INVALID_HANDLE_VALUE) return {};
 
